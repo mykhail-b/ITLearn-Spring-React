@@ -1,6 +1,6 @@
 # ITLearn
 
-**ITLearn** is an interactive learning platform designed to teach programming the fun way — like Duolingo, but for developers.
+**ITLearn** is an interactive learning platform designed to teach programming the fun way — like Duolingo, but for programmers/developers.
 
 ## What is ITLearn?
 
@@ -8,11 +8,8 @@ ITLearn helps users learn programming languages through short lessons, coding ex
 
 ## Features
 
-- 🎮 Gamified experience: earn points, unlock levels, and complete challenges  
-- 💻 Practice coding directly in the app with instant feedback  
-- 📊 Track your progress and achievements  
-- 🌐 Learn multiple programming languages (Python, JavaScript, Java, and more)  
-- 🤝 Connect with a community of learners for support and tips  
+- Gamified learning programming experience: earn points, unlock levels, and complete challenges  
+- Track your progress and achievements
 
 ## Why ITLearn?
 
@@ -20,14 +17,4 @@ Learning to code doesn’t have to be boring or overwhelming. ITLearn makes prog
 
 ---
 
-## Warnings
-
-This project is a student diploma work. All rights are reserved and the content is copyrighted.  
-Unauthorized use, copying, or distribution of this project is prohibited.  
-For educational purposes only. 
-
-:)
-
----
-
-Feel free to contribute or report issues!
+Feel free to contribute or report issues! Maybe

@@ -1,34 +1,30 @@
 package com.itlearn.backend.models;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
 
 
 @Entity
-@Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(unique = true)
 	private String username;
-
 	private String password;
-
 	private String email;
-
-	private boolean enabled = true;
+	private boolean enabled;
+	private boolean tokenExpired;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Role> role;
 
 	//Getter Setter
+
 	public Long getId() {
 		return id;
 	}
@@ -69,11 +65,19 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public boolean isTokenExpired() {
+		return tokenExpired;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setTokenExpired(boolean tokenExpired) {
+		this.tokenExpired = tokenExpired;
+	}
+
+	public Collection<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(Collection<Role> role) {
+		this.role = role;
 	}
 }

@@ -1,51 +1,46 @@
 package com.itlearn.backend.controllers;
 
+import com.itlearn.backend.dto.UserDto;
 import com.itlearn.backend.models.User;
 import com.itlearn.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // Получить всех пользователей
-    @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
+    @PostMapping("/login")
+    private ResponseEntity<?> login(@RequestBody UserDto userDto) throws IOException {
+        try {
+            User user = userService.loginUserAccount(userDto);
+            user.setPassword(null);
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
     }
 
-    @GetMapping("/{id}")
-    public Optional<User> findById(@PathVariable Long id) {
-        return userService.findById(id);
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public User create(@RequestBody User user) {
-        return userService.save(user);
-    }
-
-    @PutMapping
-    public User update(@RequestBody User user) {
-        return userService.save(user);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        userService.deleteById(id);
-    }
-
-    @GetMapping("/find/username/{username}")
-    public Optional<User> findByUsername(@PathVariable String username) {
-        return userService.findByUsername(username);
+    @PostMapping("/register")
+    private ResponseEntity<?> register(@RequestBody UserDto userDto) throws IOException {
+        try {
+            User createdUser = userService.registerNewUserAccount(userDto);
+            createdUser.setPassword(null);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 }
